@@ -1,0 +1,14 @@
+[
+   {
+      "tittle":"Chocolate orgánico 60% cacao 50 g",
+      "price":2.100,
+      "thumbnail":"https://jumbo.vtexassets.com/arquivos/ids/357170-750-750?width=750&height=750&aspect=true",
+      "id":1
+   },
+   {
+      "tittle":"Chocolate orgánico 85% cacao 50 g",
+      "price":2.300,
+      "thumbnail":"https://jumbo.vtexassets.com/arquivos/ids/357170-750-750?width=750&height=750&aspect=true",
+      "id":2
+   }
+]

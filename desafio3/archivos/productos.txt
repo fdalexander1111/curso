@@ -1,0 +1,20 @@
+[
+   {
+      "title":"Chocolate orgánico 60% cacao 50 g",
+      "price":2100,
+      "thumbnail":"https://jumbo.vtexassets.com/arquivos/ids/357170-750-750?width=750&height=750&aspect=true",
+      "id":1
+   },
+   {
+      "title":"Azúcar Rubia Orgánica, 1kg, Marca Manare",
+      "price":2990,
+      "thumbnail":"https://cdn.tremus.cl/wp-content/uploads/2022/05/FRENTE-1370114.jpg",
+      "id":2
+   },
+   {
+      "title":"Quínoa grano blanco 500 g",
+      "price":3699,
+      "thumbnail":"https://jumbo.vtexassets.com/arquivos/ids/336801-750-750?width=750&height=750&aspect=true",
+      "id":3
+   }
+]

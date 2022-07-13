@@ -1,0 +1,19 @@
+{
+  "name": "desafio-3",
+  "version": "1.0.0",
+  "description": "desafio 3",
+  "main": "index.js",
+
+  "scripts": {
+    "watch": "nodemon ./server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Daniel Alexander Fernandez",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  },
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
