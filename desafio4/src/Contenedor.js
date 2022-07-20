@@ -22,6 +22,7 @@ class Contenedor{
                 nextId = lastProductId + 1; 
             }
             product['id'] = nextId;
+            product['price'] = parseInt(product['price']);
             products.push(product);
             const writeFile = await fs.promises.writeFile(this.archivo, JSON.stringify(products));
             return product;
@@ -37,7 +38,11 @@ class Contenedor{
             const productos = await fs.promises.readFile(this.archivo, 'utf-8');
             const productosParse = JSON.parse(productos);
             let producto = productosParse.find(item => item.id == id );
-            producto = producto ? producto : "Producto no encontrado";
+            if(producto){
+                return { 'status': 'ok', 'producto': producto };
+            }else{
+                return { 'status': 'nok'};
+            }
             return producto;
 
         } catch (error) {
@@ -62,13 +67,16 @@ class Contenedor{
 
             const product = await this.getById(id);
             const products = await this.getAll();
-            const productDeleteIndex = products.filter(item => item.id != product.id);
+            const productDeleteIndex = products.filter(item => item.id != product.producto.id);
             const deleteById = await fs.promises.writeFile(this.archivo, JSON.stringify(productDeleteIndex));  
-            const deleteMessage = product != "Producto no encontrado"  ? `se borro el producto de id ${id}`: `No se encontro el producto de id ${id}`
-            return  deleteMessage;
+            
+            if(product.status == "ok"){
+                return `se borro el producto de id ${id}`;
+            }else{
+                return `No se encontro el producto de id ${id}`;                
+            }
 
         } catch (error) {
-          console.log(error);
             return  `no se pudo borrar el producto de id ${id}`;
         }
     }
@@ -90,7 +98,7 @@ class Contenedor{
             const products = await this.getAll();
             let randomNum =  Math.floor(Math.random() * products.length) + 1;
             const product = await this.getById(randomNum);
-            return product;
+            return product.producto;
 
         } catch (error) {
             
@@ -106,10 +114,9 @@ class Contenedor{
             const productIndex = productsList.findIndex(item => item.id == id);
 
             if(productIndex >= 0){
-                
+                              
                 product['id'] = parseInt(id);
                 productsList.splice(productIndex,1, product);
-                console.log(productsList);
                 const updateById = await fs.promises.writeFile(this.archivo, JSON.stringify(productsList));
                 return product; 
 

@@ -9,25 +9,30 @@ const container = new Contenedor("./archivos/productos.txt");
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(express.static("public"));
 
 router.get('/', async (req, res)=>{
      
     const products = await container.getAll();
-    res.send({products});
+    res.json(products);
 }); 
 
 router.get('/:id', async (req, res, next)=>{
     
     let product_id = req.params.id;
     const product = await container.getById(product_id);
-    res.send({product});
+    if(product.status == "ok"){
+        res.json(product.producto);
+    }else{
+        res.json({error: 'producto no encontrado'})
+    }
 });
 
 router.post('/', async(req, res) => {
     
     const product =  req.body;
     const saveProduct = await container.save(product);
-    res.send({saveProduct});
+    res.json(saveProduct);
 
 });
 
@@ -36,7 +41,7 @@ router.put('/:id', async(req, res) => {
     const product =  req.body;
     let product_id = req.params.id;
     const updateProduct = await container.updateById(product_id, product);
-    res.send({updateProduct});
+    res.json(updateProduct);
     
 });
 
@@ -44,7 +49,10 @@ router.delete('/:id', async(req, res) => {
 
     let product_id = req.params.id;
     const deleteProduct = await container.deleteById(product_id);
-    res.send({deleteProduct});
+
+    console.log(deleteProduct);
+    res.json(deleteProduct);
+  
 });
 
 app.use("/api/productos", router);
