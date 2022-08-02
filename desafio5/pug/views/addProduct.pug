@@ -1,0 +1,15 @@
+html
+    head
+        title Crear
+    body
+        div 
+            a(href=allProductLink) Productos
+        h2 Ingrese Producto
+        form(role="form" method="POST" action="/productos/")
+
+        
+            input(type="text"  name="title"  placeholder="Titulo") 
+            input(type="text"  name="price"  placeholder="Precio") 
+            input(type="text"  name="thumbnail"  placeholder="Foto") 
+            button(type="submit") Crear
+
