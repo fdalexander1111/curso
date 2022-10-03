@@ -59,16 +59,16 @@ app.use(session({
 app.get('/', auth,  (req,res) => {
 
     let allProductLink = path.relative('/', '/productos/')
-    let name = req.session.name ? req.session.name : null
+    let name = req.session.username ? req.session.username : null
     res.render("addProduct", {
         allProductLink: allProductLink  ,
         sessionName: name,
     });
 });
 
-passport.use("login", new LocalStrategy(async (email, password, done) => {
+passport.use("login", new LocalStrategy(async (username, password, done) => {
 
-    const user = await userDao.getByname('email', email )
+    const user = await userDao.getByname('email', username);
     const passwordHassBD = user.password;
     const passwordHass = bcrypt.compareSync(password, passwordHassBD)
 
@@ -78,6 +78,30 @@ passport.use("login", new LocalStrategy(async (email, password, done) => {
     return done(null, user);
     
 }));
+
+passport.use("signup", new LocalStrategy({
+    passReqToCallback: true
+  }, async (req, username, password, done) => {
+    
+    const user = req.body;
+    const passwordHash = bcrypt.hashSync(password, 10);
+    user.password = passwordHash;
+    const userSave = await userDao.save(user);
+
+    return done(null, newUser);
+
+  }));
+  
+  passport.serializeUser((user, done) => {
+    done(null, user._id);
+  });
+  
+  passport.deserializeUser(async (id, done) => {
+    id = Types.ObjectId(id);
+    const user = await userDao.findById(id);
+    done(null, user);
+  });
+  
 
 app.get('/login/', (req,res) => {
 
@@ -100,18 +124,22 @@ app.get('/register', (req,res) => {
 
 app.post('/register', async (req,res) => {
 
-    const user = req.body;
-    const passwordHash = bcrypt.hashSync(user.password, 10);
-    user.password = passwordHash;
-    console.log(passwordHash);
-    const userSave = await userDao.save(user);
-
     if(userSave){
         res.redirect('/login')
     }else{
         res.redirect('/register/error');
     }
+
 });
+
+app.post("/register", passport.authenticate("signup", {
+    failureRedirect: "/register/error",
+}) , (req, res) => {  
+        if(req.body.email){
+            req.session.email = req.body.email;
+            res.redirect('/');
+        }
+    });
 
 app.get('/register/error', (req,res) => {
 
@@ -119,13 +147,13 @@ app.get('/register/error', (req,res) => {
     res.render("registerError" , { registerLink });
 });
 
-app.post('/login/', (req,res) => {
-    
-    if(req.body.name){
-        req.session.name = req.body.name;
+app.post("/login", passport.authenticate("login", {
+    failureRedirect: "/login/error",
+  }) ,(req, res) => {
+    if(req.body.username){
+        req.session.username = req.body.username;
         res.redirect('/');
     }
-    
 });
 
 app.get('/logout/', (req,res) => {

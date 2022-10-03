@@ -31,13 +31,10 @@ export default class mongoDBContainer{
         try {
             const document = new this.model(object);
             const result = await document.save();
-            console.log(result);
-            console.log("aca");
             return result;
             
         } catch (error) {
-            console.log(error);
-            return false;
+           return false;
         }
     }
 
@@ -95,7 +92,7 @@ export default class mongoDBContainer{
     async getByname(field, name){
 
         try {
-            const documents = await this.model.find({ [field] : name });
+            const documents = await this.model.findOne({ [field] : name });
             if(documents){
 
                 return documents;
