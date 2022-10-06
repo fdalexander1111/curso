@@ -1,0 +1,25 @@
+<div><a href="{{addProductLink}}">Agregar</a></div>
+{{#if productList}}
+    <table> 
+        <thead>
+            <tr>
+                <td>Nombre</td>
+                <td>Precio</td>
+                <td>Foto</td>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each productList}}
+                <tr>
+                    <td>{{this.title}}</td>
+                    <td>{{this.price}}</td>
+                    <td>{{this.thumbnail}}</td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+{{else}}
+
+    No se encontraron productos
+
+{{/if}}

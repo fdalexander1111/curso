@@ -1,0 +1,25 @@
+<div class="flex justify-center items-center bg-blue-100 h-screen">
+    <div class="bg-white rounded-lg shadow-lg md:w-8/12 lg:w-5/12 lg:ml-6">
+        <div class="p-6">
+            <h2 class="text-xl font-bold">Registro de usuario</h2>
+            <div class="pb-8 mb-2 my-4 ">
+                <div class="mb-6">
+                    <form action="/register/" method="POST">
+                        <input type="text" name="email" id="email"
+                        class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                        placeholder="correo"
+                        />
+                         <input type="text" name="password" id="password"
+                        class="form-control block w-full my-4 px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                        placeholder="Contraseña"
+                        />
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-2  rounded focus:outline-none focus:shadow-outline">
+						Crear
+						</button>
+                    </form>
+                </div>
+                <div><a href="{{loginLink}}">Login</a></div>
+            </div>
+        </div>
+    </div>
+</div>

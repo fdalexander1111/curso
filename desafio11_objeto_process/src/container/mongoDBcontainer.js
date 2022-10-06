@@ -1,4 +1,3 @@
-import messages  from "../../schemas/messages.js";
 import fs from "fs";
 import { DefaultDeserializer } from 'v8'
 import { config } from "../../config.js";
@@ -7,11 +6,11 @@ import mongoose from "mongoose";
 
 const URIString = config.URIString;
 
-export default class Message{
+export default class mongoDBContainer{
 
-    constructor(){
+    constructor(model){
 
-      this.model = messages;
+      this.model = model;
       this.connect();
     
     }
@@ -19,7 +18,6 @@ export default class Message{
     async connect(){
 
         try {
-            console.log("se conecto a la base de datos");
             return await mongoose.connect(URIString);
 
         } catch (err) {
@@ -36,7 +34,7 @@ export default class Message{
             return result;
             
         } catch (error) {
-            return false;
+           return false;
         }
     }
 
@@ -89,6 +87,22 @@ export default class Message{
         } catch (error) {
             return false;
         }
+    }
+    
+    async getByname(field, name){
+
+        try {
+            const documents = await this.model.findOne({ [field] : name });
+            if(documents){
+
+                return documents;
+            }else{
+                return false;
+            }
+        } catch (error) {
+            return false;
+        }
+
     }
 
 
