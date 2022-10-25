@@ -1,0 +1,5 @@
+node main.js -p 8080 -m FORKER
+node main.js -p 8080 -m CLUSTER
+
+nodemon main.js -p 8080 -m FORKER
+nodemon main.js -p 8080 -m CLUSTER|
