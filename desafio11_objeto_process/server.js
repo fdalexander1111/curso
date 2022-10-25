@@ -20,6 +20,7 @@ import bcrypt from "bcrypt";
 import passport from "passport";
 import LocalStrategy  from "passport-local";
 import yargs from 'yargs';
+import { fork } from 'child_process';
 
 const app = express();
 const router = Router();
@@ -29,18 +30,22 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const args = yargs(process.argv.slice(2))
   .alias({
-    m: "modo",
+    a: "modo",
     p: "puerto",
-    d: "debug"
+    d: "debug",
+    m: "modo"
   })
   .default({
-    modo: "dev",
+    ambiente: "dev",
     puerto: 8080,
-    debug: false
+    debug: false,
+    modo: "FORK",
   })
   .argv
 
 const port = args.puerto;
+const mode = args.modo;
+console.log(mode);
 
 const hbs = handlebars.create({
     extname: ".hbs",
