@@ -1,0 +1,8 @@
+export const NEW_PRODUCT = "NEW_PRODUCT";
+export const UPDATE_PRODUCTS = "UPDATE_PRODUCTS";
+export const POST_PRODUCT = "POST_PRODUCT";
+export const NEW_MESSAGE = "NEW_MESSAGE";
+export const POST_MESSAGE = "POST_MESSAGE";
+export const UPDATE_MESSAGES = "UPDATE_MESSAGES";
+
+
