@@ -1,0 +1,15 @@
+node main.js -p 8080 -m FORKER
+node main.js -p 8080 -m CLUSTER
+
+nodemon main.js -p 8080 -m FORKER
+nodemon main.js -p 8080 -m CLUSTER|
+
+forever start forever.js -p 8081
+forever list
+
+pm2 start forever.js --name=server1 --watch
+pm2 delete server1
+
+pm2 start forever.js --name=server2 --watch -i max
+
+pm2 list
