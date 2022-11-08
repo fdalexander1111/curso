@@ -54,15 +54,23 @@ if (cluster.isPrimary && mode == "CLUSTER") {
         res.end("visitas: " + visitas)
         break;
     case "/api/randoms":
-        const child = fork("./child.js");
+     /*   const child = fork("./child.js");
         child.send(urlParams.searchParams.get('cant'));
         
         child.on("message", (msg) => {
             res.end(JSON.stringify(msg));
-        });
+        });*/
         break;
     case "/info":
 
+       /* console.log("args: " + args._  +  "\n" +
+        "io: " + process.platform +  "\n" +
+        "nodeVersion: " + process.version +  "\n" +
+        "rss: " + process.memoryUsage().rss +  "\n" +
+        "pathEjecution: " + process.cwd() +  "\n" +
+        "processId: " + process.pid +  "\n" +
+        "folderProy: " + urlParams +  "\n" +
+        "numCPUs: " + numCPUs);*/
 
         res.end("args: " + args._  +  "\n" +
                 "io: " + process.platform +  "\n" +

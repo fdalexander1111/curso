@@ -22,6 +22,7 @@ import LocalStrategy  from "passport-local";
 import yargs from 'yargs';
 import { fork } from 'child_process';
 import compression from 'compression';
+import winston from 'winston';
 
 const app = express();
 const router = Router();
@@ -56,6 +57,15 @@ const hbs = handlebars.create({
     partialsDir: __dirname + "/views/partials/"
 });
 
+const logger = winston.createLogger({
+    level: 'info',
+    transports: [
+        new winston.transports.Console({level: "info"}),
+        new winston.transports.File({filename: "warn.log", level: "warn"}),
+        new winston.transports.File({filename: "error.log", level: "error"}),
+      ]
+});
+
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
@@ -75,7 +85,7 @@ app.use(session({
 }));
 
 app.get('/', auth,  (req,res) => {
-
+    logger.log("info","metodo GET ruta /");
     let allProductLink = path.relative('/', '/productos/')
     let name = req.session.username ? req.session.username : null
     res.render("addProduct", {
@@ -85,7 +95,7 @@ app.get('/', auth,  (req,res) => {
 });
 console.log(args._);
 app.get('/info', (req,res) => {
-
+    logger.log("info","metodo GET ruta /info");
     res.render("info", {
         args: args._,
         io: process.platform,
@@ -98,7 +108,7 @@ app.get('/info', (req,res) => {
 });
 
 app.get('/infoZip',gzipMiddleware, (req,res) => {
-
+    logger.log("info","metodo GET ruta /infoZip");
     res.render("info", {
         args: args._,
         io: process.platform,
@@ -148,26 +158,28 @@ passport.use("signup", new LocalStrategy({
   
 
 app.get('/login/', (req,res) => {
-
+    logger.log("info","metodo GET ruta /login");
+    logger.log("error","probando error");
     let registerLink = path.relative('/', '/register/')
 
     res.render("login", { registerLink });
 });
 
 app.get('/login/error', (req,res) => {
-
+    logger.log("info","metodo GET ruta /login/error");
+    logger.log("error","metodo POST ruta /login/error");
     let loginLink = path.relative('../', '/login/')
     res.render("loginError" , { loginLink });
 });
 
 app.get('/register', (req,res) => {
-
+    logger.log("info","metodo GET ruta /register");
     let loginLink = path.relative('/', '/login/')
     res.render("register" , { loginLink });
 });
 
 app.post('/register', async (req,res) => {
-
+    logger.log("info","metodo POST ruta /register");
     if(userSave){
         res.redirect('/login')
     }else{
@@ -186,7 +198,7 @@ app.post("/register", passport.authenticate("signup", {
     });
 
 app.get('/register/error', (req,res) => {
-
+    logger.log("info","metodo GET ruta //register/error");
     let registerLink = path.relative('../', '/register/')
     res.render("registerError" , { registerLink });
 });
@@ -205,7 +217,7 @@ app.get('/logout/', (req,res) => {
     res.render("logout");
 });
 app.post('/logout/', (req,res) => {
-  
+    logger.log("info","metodo POST ruta /logout");
     req.session.destroy(err => {
         if(err) {
           res.send("Error al cerrar sesion");
@@ -216,7 +228,7 @@ app.post('/logout/', (req,res) => {
 });
 
 app.get('/api/productos-test', async (req,res) => {
-
+    logger.log("info","metodo POST ruta /api/productos-test");
     const productsList = await FakerList.FakerList();
 
     res.render("productsFaker", {
@@ -258,6 +270,16 @@ app.use("/productos", router);
 const server = httpServer.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
 });
+
+app.use((req, res) => {
+    const array = {
+        "error": -2,
+        "descripcion":  `ruta: ${req.url} metodo: ${req.method} no implementado`
+    }
+    res.status(404).json(array);
+
+    logger.log("warn",`ruta: ${req.url} metodo: ${req.method} no implementado`);
+})
 
 
 server.on("error", error => console.log(`Error: ${error}`));
