@@ -1,0 +1,24 @@
+{{#if fakerProductList}}
+    <table> 
+        <thead>
+            <tr>
+                <td>Nombre</td>
+                <td>Precio</td>
+                <td>Foto</td>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each fakerProductList}}
+                <tr class="border-b">
+                    <td text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap>{{ title}}</td>
+                    <td text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap>{{ price}}</td>
+                    <td text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap ><img class="py-1.5 object-contain h-20 w-40 ..." src="{{thumbnail}}" alt=""></td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+{{else}}
+
+    No se encontraron productos
+
+{{/if}}
