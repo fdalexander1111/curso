@@ -1,5 +1,5 @@
-import { productDao } from '../index.js';
-import { Document, Types } from "mongoose";
+import { productDao } from '../models/DAO/index.js';
+
 
 class ProductController{
 
@@ -37,9 +37,9 @@ class ProductController{
     async save(req , res){
     
          try {
-    
+            
              const product = req.body;
-             const result = await messageDao.save(product);
+             const result = await productDao.save(product);
     
              if(result){
     
