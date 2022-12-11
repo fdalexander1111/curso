@@ -11,12 +11,16 @@
   "author": "Daniel Fernandez",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.19"
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0",
+    "nodemon": "^2.0.19",
+    "supertest": "^6.3.3"
   },
   "dependencies": {
     "@faker-js/faker": "^7.5.0",
     "0x": "^5.4.1",
     "autocannon": "^7.10.0",
+    "axios": "^1.2.1",
     "bcrypt": "^5.0.1",
     "compression": "^1.7.4",
     "connect-mongo": "^4.6.0",

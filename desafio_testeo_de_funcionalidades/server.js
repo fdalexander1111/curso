@@ -7,10 +7,12 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
 
+const routeProduct = new RouterProduct();
+
 /**
  * Zona de rutas
  */
-app.use("/api/productos", RouterProduct);
+app.use("/api/productos", routeProduct.start());
 /*app.use("/api/mensajes", routerShoppingCart);
 app.use("/api/user", routerUser);*/
 

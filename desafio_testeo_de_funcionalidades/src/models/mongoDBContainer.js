@@ -40,7 +40,7 @@ export default class mongoDBContainer{
 
     async updateById(object) {
         try {
-            renameField(object, 'id', '_id')
+          
             const { n, nModified } = await this.model.replaceOne({ '_id': object._id }, object)
             if (n == 0 || nModified == 0) {
                 return false
@@ -55,10 +55,16 @@ export default class mongoDBContainer{
     }
 
     async deleteById(id) {
+
         try {
             const { n, nDeleted } = await this.model.deleteOne({ '_id': id })
+            console.log(n);
+            console.log(nDeleted);
+           
             if (n == 0 || nDeleted == 0) {
                 return false;
+            }else{
+                return true;
             }
         } catch (error) {
             return false;

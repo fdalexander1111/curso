@@ -14,7 +14,9 @@ class RouterProduct{
     start(){
        
         router.get("/", this.productController.getAll);
-        router.post("/", auth, this.productController.save);
+        router.post("/", this.productController.save);
+        router.put("/:id", this.productController.updateById);
+        router.delete("/:id", this.productController.deleteById);
 
         return router;
     }

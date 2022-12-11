@@ -1,4 +1,5 @@
 import { productDao } from '../models/DAO/index.js';
+import { Document, Types } from "mongoose";
 
 
 class ProductController{
@@ -76,6 +77,63 @@ class ProductController{
         });
          return products;
     
+    }
+
+   async updateById(req , res){
+
+        try {
+            
+            const productReq =  req.body;
+            let product_id = new Types.ObjectId(req.params.id);
+            productReq._id = product_id;
+           
+            const updateProduct = await productDao.updateById(productReq);
+            
+            if(updateProduct){
+                res.json({
+                    'status':'ok',
+                    'message' : 'Producto editado correctamente',
+                    'code':'200',
+                    'product': updateProduct
+                });
+            }else{
+                res.status(400).json({
+                    'status':'nok',
+                    'message' : 'Error al editar el producto',
+                    'code':'400',
+                    'product': null
+                });
+            }
+
+        } catch (error) {
+             res.status(400).json({error: error.message});
+        }
+
+    }
+
+    async  deleteById(req , res){
+
+        try {
+            
+            let product_id = new Types.ObjectId(req.params.id);
+            const deleteProduct = await productDao.deleteById(product_id);
+            if(deleteProduct){
+                res.json({
+                    'status':'ok',
+                    'message' : 'Producto Eliminado correctamente',
+                    'code':'200',
+                });
+            }else{
+                res.status(400).json({
+                    'status':'nok',
+                    'message' : 'No se elimino o no se encontro el producto',
+                    'code':'400',
+                });
+            }
+        } catch (error) {
+            res.status(400).json({error: error.message});
+        }
+
     }
 
 }
