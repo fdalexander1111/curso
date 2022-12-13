@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "watch": "nodemon ./server.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "mocha"
   },
   "author": "Daniel Fernandez",
   "license": "ISC",
